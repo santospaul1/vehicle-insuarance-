@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Policy Overview</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f9fa;
+            color: #333;
+        }
+
+        header {
+            background-color: #fff;
+            color: #007bff;
+            padding: 20px;
+            text-align: center;
+        }
+
+        h1 {
+            margin: 0;
+        }
+
+        main {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #007bff;
+            color: #fff;
+            font-weight: bold;
+        }
+
+        tbody tr:hover {
+            background-color: #f5f5f5;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Policy Overview</h1>
+    </header>
+    <main>
+        <table>
+            <thead>
+                <tr>
+                    <th>Policy Number</th>
+                    <th>Vehicle</th>
+                    <th>Start Date</th>
+                    <th>End Date</th>
+                    <th>Premium Amount</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for policy in policy %}
+                    <tr>
+                        <td>{{ policy.policy_number }}</td>
+                        <td>{{ policy.vehicle }}</td>
+                        <td>{{ policy.start_date}}</td>
+                        <td>{{ policy.end_date }}</td>
+                        <td>{{ policy.premium_amount }}</td>
+                        <td>{{ policy.status }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </main>
+</body>
+</html>

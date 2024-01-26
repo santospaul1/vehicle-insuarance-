@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Customer Details</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            margin: 20px;
+        }
+
+        h1 {
+            color: #007bff;
+        }
+
+        h3 {
+            color: green;
+        }
+
+        p {
+            margin: 10px 0;
+        }
+
+        strong {
+            font-weight: bold;
+        }
+
+        .vehicle-card {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        a {
+            display: block;
+            margin-top: 20px;
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+{% for vehicle in vehicles %}
+    <div class="vehicle-card">
+
+        <center><h1>{{vehicle.number_plate}} </h1></center>
+
+       <center><p><h3>Owner:</h3> {{ vehicle.owner }}</p>
+        <p><h3>Model:</h3> {{ vehicle.model }}</p>
+        <p><h3>Make:</h3> {{ vehicle.make }}</p>
+
+
+        <!-- Add more details as needed -->
+
+        <a href="{% url 'insuarance:view_vehicle' vehicle.id %}">View More</a>
+           </center>
+    </div>
+{% endfor %}
+</body>
+</html>

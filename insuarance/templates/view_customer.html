@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Customer Details</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            margin: 20px;
+        }
+
+        h1 {
+            color: #007bff;
+        }
+        h3 {
+            color: green;
+        }
+
+        p {
+            margin: 10px 0;
+        }
+
+        strong {
+            font-weight: bold;
+        }
+
+        .customer-details {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        a {
+            display: block;
+            margin-top: 20px;
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="customer-details">
+        <center><h1>Customer Details</h1></center>
+       <center><p><h3>First Name:</h3> {{ customer.first_name }}</p>
+        <p><h3>Last Name:</h3> {{ customer.last_name }}</p>
+        <p><h3>ID Number:</h3> {{ customer.id_number }}</p>
+        <p><h3>Driving License No.:</h3> {{ customer.dls_no }}</p>
+        <p><h3>Address:</h3> {{ customer.address }}</p>
+        <p><h3>Email:</h3> {{ customer.email }}</p>
+        <p><h3>Phone Number:</h3> {{ customer.phone_no }}</p>
+        <p><h3>Gender:</h3> {{ customer.gender }}</p>
+
+        <!-- Add more details as needed -->
+
+        <a href="{% url 'insuarance:view_customers' %}">Back to Customer List</a>
+           </center>
+    </div>
+</body>
+</html>

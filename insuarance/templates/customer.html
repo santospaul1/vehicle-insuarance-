@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer List</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            margin: 20px;
+
+        }
+        div {
+        height:40px;
+        width:150px;
+        padding-top:12px;
+        text-align:center;
+        background-color:aqua;
+        }
+
+        h1 {
+            color: #007bff;
+            text-align: center;
+        }
+
+        ol {
+            list-style: none;
+            padding: 0;
+
+        }
+
+        li {
+            background-color: #fff;
+            width: 300px;
+            text-align: center;
+            font-size: 20px;
+
+            height: 50px;
+            margin: 20px 0;
+            padding-top: 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s;
+        }
+
+        li:hover {
+            transform: scale(1.02);
+        }
+
+        a {
+            color: black;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <h1>Customer List</h1>
+    <div><a href="{% url 'insuarance:add_customer'%}">Add Customer</a></div>
+    <ol>
+        {% for customer in customers %}
+          <center> <li>
+                <a href="{% url 'insuarance:view_customer' customer.id %}">
+                    {{ customer.first_name }} {{ customer.last_name }}
+                </a>
+            </li>
+              </center>
+        {% endfor %}
+    </ol>
+</body>
+</html>
