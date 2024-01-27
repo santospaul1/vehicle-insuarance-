@@ -11,4 +11,23 @@
     {{ form.as_p }}
     <button type="submit">Submit</button>
   </form>
+ <script>
+        // Function to calculate and update premium amount
+        function updatePremiumAmount() {
+            const startDate = new Date(document.getElementById('id_start_date').value);
+            const endDate = new Date(document.getElementById('id_end_date').value);
+
+            if (!isNaN(startDate) && !isNaN(endDate)) {
+                const dateDifference = (endDate - startDate) / (1000 * 60 * 60 * 24);  // Convert milliseconds to days
+                const premiumAmount = dateDifference * 100;
+
+                // Update the premium_amount field
+                document.getElementById('id_premium_amount').value = premiumAmount.toFixed(2);
+            }
+        }
+
+        // Add onchange event listeners to start_date and end_date fields
+        document.getElementById('id_start_date').addEventListener('change', updatePremiumAmount);
+        document.getElementById('id_end_date').addEventListener('change', updatePremiumAmount);
+    </script>
 {% endblock %}

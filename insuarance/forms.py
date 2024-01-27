@@ -35,6 +35,21 @@ class PolicyForm(forms.ModelForm):
             'end_date': DateInput(attrs={'type': 'date'}),
         }
 
+    def save(self, commit=True):
+        policy = super().save(commit=False)
+
+        # Calculate premium_amount based on date difference
+        date_difference = policy.end_date - policy.start_date
+        premium_amount = date_difference.days * 100
+
+        # Set the calculated premium_amount
+        policy.premium_amount = premium_amount
+
+        if commit:
+            policy.save()
+
+        return policy
+
 
 class VehicleForm(forms.ModelForm):
     class Meta:

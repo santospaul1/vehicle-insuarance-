@@ -25,6 +25,7 @@ class Policy(models.Model):
         default='Active'
     )
     vehicle = models.ForeignKey('Vehicle', on_delete=models.CASCADE, related_name='policies', default=None)
+
     def __str__(self):
         return f"{self.policy_number}"
 class Customer(models.Model):

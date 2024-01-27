@@ -1,4 +1,6 @@
 from datetime import timezone
+
+from django.db.models import Q
 from django.utils import timezone
 from django.contrib import messages
 from django.shortcuts import render, redirect, get_object_or_404
@@ -38,6 +40,16 @@ def add_customer(request):
 
 def view_customers(request):
     customers = Customer.objects.all()
+    search_term = request.GET.get('search', '')  # Get search query from GET request
+    if search_term:
+        customers = Customer.objects.filter(
+            Q(first_name__icontains=search_term) |  # Search in name field
+            Q(email__icontains=search_term) |  # Search in email field
+            Q(last_name__icontains=search_term)
+            # Add more fields to search as needed
+        )
+    else:
+        customers = Customer.objects.all()  # Fetch all customers if no search term
     return render(request, 'customer.html', {'customers': customers})
 def view_customer(request, customer_id):
     customer = get_object_or_404(Customer, id=customer_id)
@@ -46,6 +58,7 @@ def add_policy(request):
     if request.method == 'POST':
         form = PolicyForm(request.POST)
         if form.is_valid():
+
             policy = form.save()
             messages.success(request,"New policy has been added")
             return redirect('insuarance:view_policy')
@@ -80,3 +93,14 @@ def view_vehicle(request,number_plate):
     vehicle = get_object_or_404(Vehicle, id=number_plate)
 
     return render(request, 'view_vehicle.html', {'vehicle': vehicle})
+def update_policy(request):
+    policies = Policy.objects.all()
+    for policy in policies:
+        date_difference = policy.end_date - policy.start_date
+        policy.date_difference = date_difference.days
+        if policy.status == 'Expired' or 'Canceled':
+            amount = policy.date_difference * 100
+            policy.premium_amount = amount
+            policy.status = 'Active'
+            policy.save()
+    return render(request, 'update_policy.html', {'policies': policies})
