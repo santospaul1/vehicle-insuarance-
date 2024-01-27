@@ -1,3 +1,5 @@
+from datetime import timezone
+from django.utils import timezone
 from django.contrib import messages
 from django.shortcuts import render, redirect, get_object_or_404
 
@@ -8,6 +10,18 @@ from insuarance.models import Customer, Policy, Vehicle
 from django.contrib import messages
 from django.shortcuts import render, redirect
 from insuarance.forms import CustomerForm
+
+def dashboard(request):
+    count_customer = Customer.objects.count()
+    count_policies = Policy.objects.count()
+    count_vehicle = Vehicle.objects.count()
+    context = {
+        'count_vehicle':count_vehicle,
+        'count_policies':count_policies,
+        'count_customer':count_customer,
+
+    }
+    return render(request, 'dashboard.html', context)
 
 def add_customer(request):
     if request.method == 'POST':
@@ -34,13 +48,20 @@ def add_policy(request):
         if form.is_valid():
             policy = form.save()
             messages.success(request,"New policy has been added")
-            return redirect('insuarance:view_customers')
+            return redirect('insuarance:view_policy')
     else:
         form = PolicyForm()
     return render(request, 'add_policy.html', {'form': form})
 def view_policy(request):
-    policy = Policy.objects.all()
-    return render(request, 'view_policy.html', {'policy': policy})
+    policies = Policy.objects.all()
+    for policy in policies:
+        if policy.end_date < timezone.now().date():
+            if policy.status =='Active':
+                policy.status = 'Expired'
+                policy.save()
+            # If the end date is past today's date, update the policy status to 'Expired'
+
+    return render(request, 'view_policy.html', {'policies': policies})
 def add_vehicle(request):
     if request.method == 'POST':
         form = VehicleForm(request.POST)

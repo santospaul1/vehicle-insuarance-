@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="dashboard.css">
+<style>body {
+    font-family: copperplate;
+    background-color:black;
+    margin: 20px;
+}
+
+h1{
+color:white;
+}
+.container {
+    width: 80%;
+    margin: 0 auto;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+.card {
+    background-color: #f2f2f2;
+    padding: 20px;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.card h2 {
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+.count {
+    font-size: 24px;
+    font-weight: bold;
+    color:indigo;
+}
+
+/* Additional styling for visual appeal */
+</style>
+</head>
+<body>
+    <div class="container">
+        <h1>Dashboard</h1>
+        <div class="grid">
+            <div class="card">
+                <h2>Policies</h2>
+                <p class="count">{{ count_policies }}</p>
+                <a href="{% url 'insuarance:view_policy' %}" class="view-more">View More</a>
+            </div>
+            <div class="card">
+                <h2>Vehicles</h2>
+                <p class="count">{{ count_vehicle }}</p>
+                <a href="{% url 'insuarance:view_vehicles' %}" class="view-more">View More</a>
+            </div>
+            <div class="card">
+                <h2>Customers</h2>
+                <p class="count">{{ count_customer }}</p>
+                <a href="{% url 'insuarance:view_customers' %}" class="view-more">View More</a>
+            </div>
+        </div>
+    </div>
+</body></html>

@@ -22,6 +22,16 @@
         h1 {
             margin: 0;
         }
+        div {
+        height:40px;
+        width:150px;
+        padding-top:12px;
+        margin-top:15px;
+        text-align:center;
+        background-color:aqua;
+        margin-left: 500px
+        }
+
 
         main {
             max-width: 800px;
@@ -59,6 +69,7 @@
     <header>
         <h1>Policy Overview</h1>
     </header>
+    <div><a href="{% url 'insuarance:add_policy'%}">Add Policy</a></div>
     <main>
         <table>
             <thead>
@@ -72,7 +83,7 @@
                 </tr>
             </thead>
             <tbody>
-                {% for policy in policy %}
+                {% for policy in policies %}
                     <tr>
                         <td>{{ policy.policy_number }}</td>
                         <td>{{ policy.vehicle }}</td>

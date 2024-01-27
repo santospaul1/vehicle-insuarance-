@@ -10,6 +10,16 @@
             background-color: #f8f9fa;
             margin: 20px;
         }
+        .vehicle {
+        height:40px;
+        width:150px;
+        padding-top:6px;
+        text-align:center;
+        background-color:aqua;
+        margin-bottom:15px;
+        margin-left:520px;
+        }
+
 
         h1 {
             color: #007bff;
@@ -50,6 +60,8 @@
     </style>
 </head>
 <body>
+<center><h1>Registered Vehicles</h1></center>
+<div class="vehicle"><a href="{% url 'insuarance:add_vehicle'%}">Add vehicle</a></div>
 {% for vehicle in vehicles %}
     <div class="vehicle-card">
 

@@ -12,6 +12,7 @@ urlpatterns = [
     path('add_vehicle/', add_vehicle, name='add_vehicle'),
     path('view_vehicles/', view_vehicles, name='view_vehicles'),
     path('view_vehicle/<str:number_plate>/', view_vehicle, name='view_vehicle'),
+    path('dashboard/', dashboard, name='dashboard'),
 
 
 ]
