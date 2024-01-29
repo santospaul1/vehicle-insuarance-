@@ -1,13 +1,16 @@
+<!--
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>View Customer Details</title>
+
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f8f9fa;
+            background-color: black;
             margin: 20px;
         }
         .vehicle {
@@ -58,10 +61,14 @@
             text-decoration: underline;
         }
     </style>
+
 </head>
+-->
+{% extends 'base.html' %}
+{% block content %}
 <body>
 <center><h1>Registered Vehicles</h1></center>
-<div class="vehicle"><a href="{% url 'insuarance:add_vehicle'%}">Add vehicle</a></div>
+<div class="adder"><a href="{% url 'insuarance:add_vehicle'%}">Add vehicle</a></div>
 {% for vehicle in vehicles %}
     <div class="vehicle-card">
 
@@ -79,4 +86,4 @@
     </div>
 {% endfor %}
 </body>
-</html>
+{% endblock %}
