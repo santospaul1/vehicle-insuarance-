@@ -1,0 +1,15 @@
+<!-- templates/upload_image.html -->
+<!DOCTYPE html>
+<html lang="en">
+{% extends 'base.html' %}
+{% block content %}
+<body>
+    <h1>Upload Image for OCR</h1>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form }}
+        <button type="submit">Submit</button>
+    </form>
+</body>
+
+{% endblock %}

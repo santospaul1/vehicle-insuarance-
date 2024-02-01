@@ -14,6 +14,7 @@ urlpatterns = [
     path('view_vehicles/', view_vehicles, name='view_vehicles'),
     path('view_vehicle/<str:number_plate>/', view_vehicle, name='view_vehicle'),
     path('dashboard/', dashboard, name='dashboard'),
+    path('upload_image/', upload_image, name='upload_image'),
 
 
 ]

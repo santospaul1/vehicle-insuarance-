@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!---<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -65,12 +65,19 @@
         }
     </style>
 </head>
+-->
+{% extends 'base.html' %}
+
+{% block title %}Add Policy{% endblock %}
+
+{% block content %}
 <body>
     <header>
         <h1>Policy Overview</h1>
     </header>
-    <div><a href="{% url 'insuarance:add_policy'%}">Add Policy</a></div>
-    <main>
+  <center> <div class="btn btn-success"><a href="{% url 'insuarance:add_policy'%}">Add Policy</a></div>
+    </center>
+      <main>
         <table>
             <thead>
                 <tr>
@@ -98,4 +105,5 @@
         </table>
     </main>
 </body>
-</html>
+
+{% endblock %}

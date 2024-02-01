@@ -1,17 +1,14 @@
 from datetime import timezone
-
+from PIL import Image, ImageEnhance
+import pytesseract
 from django.db.models import Q
 from django.utils import timezone
-from django.contrib import messages
 from django.shortcuts import render, redirect, get_object_or_404
-
-import insuarance
-from insuarance.forms import CustomerForm, PolicyForm, VehicleForm
+from insuarance.forms import CustomerForm, PolicyForm, VehicleForm, ImageUploadForm
 from insuarance.models import Customer, Policy, Vehicle
-
 from django.contrib import messages
-from django.shortcuts import render, redirect
-from insuarance.forms import CustomerForm
+
+
 
 def dashboard(request):
     count_customer = Customer.objects.count()
@@ -104,3 +101,43 @@ def update_policy(request):
             policy.status = 'Active'
             policy.save()
     return render(request, 'update_policy.html', {'policies': policies})
+
+#ocr app
+def preprocess_image(image_path):
+    img = Image.open(image_path)
+    img = img.resize((800, 600))  # Resize to an optimal size
+    img = img.convert('L')  # Convert to grayscale
+    img = img.point(lambda p: p > 150 and 255)  # Apply adaptive thresholding
+    return img
+def perform_ocr(image_path):
+    # Preprocess the image
+    preprocessed_image = preprocess_image(image_path)
+
+    # Enhance image if needed (adjust the factor as required)
+    enhancer = ImageEnhance.Contrast(preprocessed_image)
+    preprocessed_image = enhancer.enhance(2.0)
+
+    # Perform OCR on the preprocessed image
+    text = pytesseract.image_to_string(preprocessed_image, config='--psm 6')
+
+    return text
+
+def upload_image(request):
+    if request.method == 'POST':
+        form = ImageUploadForm(request.POST, request.FILES)
+        if form.is_valid():
+            # Save the uploaded image to a temporary location
+            uploaded_image = form.cleaned_data['image']
+            temp_image_path = '/home/santos/Pictures/Screenshots/one.png'
+            with open(temp_image_path, 'wb') as temp_image:
+                temp_image.write(uploaded_image.read())
+
+            # Perform OCR on the image
+            extracted_text = perform_ocr(temp_image_path)
+
+            # Render the result in the template
+            return render(request, 'ocr_result.html', {'extracted_text': extracted_text})
+    else:
+        form = ImageUploadForm()
+
+    return render(request, 'upload_image.html', {'form': form})

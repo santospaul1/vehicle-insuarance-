@@ -68,3 +68,6 @@ class VehicleForm(forms.ModelForm):
         widgets = {
             'year': DateInput(attrs={'type': 'date'})
         }
+
+class ImageUploadForm(forms.Form):
+    image = forms.ImageField()

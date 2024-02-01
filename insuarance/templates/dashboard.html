@@ -19,7 +19,12 @@
                 <p class="count">{{ count_customer }}</p>
                 <a href="{% url 'insuarance:view_customers' %}" class="view-more">View More</a>
             </div>
+
+            <div class="card">
+                <a href="{% url 'insuarance:upload_image' %}" class="view-more">Use OCR</a>
+            </div>
         </div>
+
     </div>
 </body>
 {% endblock %}

@@ -1,74 +1,9 @@
-<!--
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>View Customer Details</title>
-
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: black;
-            margin: 20px;
-        }
-        .vehicle {
-        height:40px;
-        width:150px;
-        padding-top:6px;
-        text-align:center;
-        background-color:aqua;
-        margin-bottom:15px;
-        margin-left:520px;
-        }
-
-
-        h1 {
-            color: #007bff;
-        }
-
-        h3 {
-            color: green;
-        }
-
-        p {
-            margin: 10px 0;
-        }
-
-        strong {
-            font-weight: bold;
-        }
-
-        .vehicle-card {
-            max-width: 600px;
-            margin: 0 auto;
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            margin-bottom: 20px;
-        }
-
-        a {
-            display: block;
-            margin-top: 20px;
-            color: #007bff;
-            text-decoration: none;
-        }
-
-        a:hover {
-            text-decoration: underline;
-        }
-    </style>
-
-</head>
--->
 {% extends 'base.html' %}
 {% block content %}
 <body>
 <center><h1>Registered Vehicles</h1></center>
-<div class="adder"><a href="{% url 'insuarance:add_vehicle'%}">Add vehicle</a></div>
+<center><div class="btn btn-success"><a href="{% url 'insuarance:add_vehicle'%}">Add vehicle</a></div></center>
 {% for vehicle in vehicles %}
     <div class="vehicle-card">
 
