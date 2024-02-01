@@ -1,10 +1,68 @@
-{% extends 'base.html' %}
-{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OCR Result</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
 
+        h1 {
+            color: #007bff;
+            text-align: center;
+        }
+
+        p {
+            margin: 10px 0;
+        }
+
+        strong {
+            font-weight: bold;
+        }
+
+        .result-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        a {
+            display: block;
+            margin-top: 20px;
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
 <body>
-    <h1>OCR Result</h1>
-    <p>Extracted Text: {{ extracted_text }}</p>
+    <div class="result-container">
+        <h1>OCR Result</h1>
+        <p><strong>Extracted Text:</strong> {{ extracted_text }}</p>
+
+        {% if vehicle %}
+            <p><strong>Vehicle Owner:</strong> {{ vehicle.owner }}</p>
+
+            {% if vehicle.policy %}
+                <p><strong>Insurance Status:</strong> {{ vehicle.policy.status }}</p>
+            {% else %}
+                <p><strong>Insurance Status:</strong> No policy found</p>
+            {% endif %}
+
+        {% else %}
+            <p><strong>Vehicle Not Found</strong></p>
+        {% endif %}
+
+        <a href="{% url 'insuarance:upload_image' %}">Upload Another Image</a>
+    </div>
 </body>
-
-{% endblock %}
-
+</html>

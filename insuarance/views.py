@@ -106,37 +106,48 @@ def update_policy(request):
 def preprocess_image(image_path):
     img = Image.open(image_path)
     img = img.resize((800, 600))  # Resize to an optimal size
-    img = img.convert('L')  # Convert to grayscale
-    img = img.point(lambda p: p > 150 and 255)  # Apply adaptive thresholding
+    img = img.convert('L')
     return img
-def perform_ocr(image_path):
-    # Preprocess the image
-    preprocessed_image = preprocess_image(image_path)
 
-    # Enhance image if needed (adjust the factor as required)
-    enhancer = ImageEnhance.Contrast(preprocessed_image)
-    preprocessed_image = enhancer.enhance(2.0)
+def extract_text_from_image(image_path):
+    img = preprocess_image(image_path)
+    text = pytesseract.image_to_string(img)
+    return text.strip()
 
-    # Perform OCR on the preprocessed image
-    text = pytesseract.image_to_string(preprocessed_image, config='--psm 6')
+def search_vehicle_by_number_plate(number_plate):
+    try:
+        vehicle = Vehicle.objects.get(number_plate=number_plate)
 
-    return text
+        return vehicle
+    except Vehicle.DoesNotExist:
+        return None
+
+def handle_uploaded_image(image):
+    # Implement the logic to save the uploaded image
+    # Example: save it to the 'media' directory
+    path = '/home/santos/Pictures/Screenshots' + image.name
+    with open(path, 'wb+') as destination:
+        for chunk in image.chunks():
+            destination.write(chunk)
+    return path
 
 def upload_image(request):
     if request.method == 'POST':
         form = ImageUploadForm(request.POST, request.FILES)
         if form.is_valid():
-            # Save the uploaded image to a temporary location
-            uploaded_image = form.cleaned_data['image']
-            temp_image_path = '/home/santos/Pictures/Screenshots/one.png'
-            with open(temp_image_path, 'wb') as temp_image:
-                temp_image.write(uploaded_image.read())
+            image = form.cleaned_data['image']
+            image_path = handle_uploaded_image(image)
+            extracted_text = extract_text_from_image(image_path)
 
-            # Perform OCR on the image
-            extracted_text = perform_ocr(temp_image_path)
+            # Search for the vehicle by the extracted text (number plate)
+            vehicle = search_vehicle_by_number_plate(extracted_text)
 
-            # Render the result in the template
-            return render(request, 'ocr_result.html', {'extracted_text': extracted_text})
+            context = {
+                'extracted_text': extracted_text,
+                'vehicle': vehicle,
+            }
+            return render(request, 'ocr_result.html', context)
+
     else:
         form = ImageUploadForm()
 
