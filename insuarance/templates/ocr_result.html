@@ -50,17 +50,25 @@
         <p><strong>Extracted Text:</strong> {{ extracted_text }}</p>
 
         {% if vehicle %}
-            <p><strong>Vehicle Owner:</strong> {{ vehicle.owner }}</p>
 
-            {% if vehicle.policy %}
-                <p><strong>Insurance Status:</strong> {{ vehicle.policy.status }}</p>
-            {% else %}
-                <p><strong>Insurance Status:</strong> No policy found</p>
-            {% endif %}
+            <p><strong>Vehicle Owner:</strong> {{ vehicle.owner }}</p>
 
         {% else %}
             <p><strong>Vehicle Not Found</strong></p>
+
         {% endif %}
+                     {% for policy in vehicle.policies.all %}
+        {% if policy.status == 'Active' %}
+        <p><strong>Policy:</strong>  {{ policy.policy_number }}</p>
+        <p><strong>Status:</strong>  {{ policy.status }}</p>
+        <p><strong>From:</strong>  {{ policy.start_date }}</p>
+        <p><strong>To:</strong>  {{ policy.end_date }}</p>
+
+
+
+        {% endif %}
+    <!-- Display other policy details as needed -->
+{% endfor %}
 
         <a href="{% url 'insuarance:upload_image' %}">Upload Another Image</a>
     </div>

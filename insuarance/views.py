@@ -89,6 +89,7 @@ def view_vehicles(request):
 def view_vehicle(request,number_plate):
     vehicle = get_object_or_404(Vehicle, id=number_plate)
 
+
     return render(request, 'view_vehicle.html', {'vehicle': vehicle})
 def update_policy(request):
     policies = Policy.objects.all()

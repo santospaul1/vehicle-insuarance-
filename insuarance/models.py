@@ -55,9 +55,10 @@ class Vehicle(models.Model):
     year = models.DateField()
     milleage = models.IntegerField(default=0)
     vehicle_price = models.FloatField(default=0)
+    vehicle_policies = models.ManyToManyField(Policy, related_name='vehicles', blank=True)
+
     def __str__(self):
         return f"{self.number_plate} "
-
 
 
 
